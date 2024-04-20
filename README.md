@@ -1,2 +1,2 @@
 # to run the project
-mvn javafx:run
+`mvn javafx:run`
