@@ -17,12 +17,36 @@
    </top>
 
 <left>
-   <VBox alignment="CENTER" style="-fx-background-color: lightgray">
+   <VBox alignment="CENTER" style="-fx-background-color: lightgray; -fx-border-color: black; -fx-border-width: 2px;">
          <Label text="Encabezado"/>
          <HBox spacing="10">
             <Label text="Seleccione la fecha:"/>
             <DatePicker fx:id="datePicker" />
          </HBox>
+
+         <!-- Cliente box hacer otras box para poner cada uno de los labels con border-->
+        <VBox spacing="5">
+            <Label text="Cliente"/>
+            <GridPane>
+                <Label text="ID" GridPane.rowIndex="0"/>
+                <TextField fx:id="idField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                
+                <Label text="Señor/es" GridPane.rowIndex="1"/>
+                <TextField fx:id="senorField" GridPane.columnIndex="1" GridPane.rowIndex="1" disable="true"/>
+                
+                <Label text="Dirección" GridPane.rowIndex="2"/>
+                <TextField fx:id="direccionField" GridPane.columnIndex="1" GridPane.rowIndex="2" disable="true"/>
+                
+                <Label text="CUIT" GridPane.rowIndex="3"/>
+                <TextField fx:id="cuitField" GridPane.columnIndex="1" GridPane.rowIndex="3" disable="true"/>
+                
+                <Label text="IVA tipo" GridPane.rowIndex="4"/>
+                <ChoiceBox fx:id="ivaTipoChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                    <!-- Add options for IVA tipo -->
+                </ChoiceBox>
+            </GridPane>
+            <Button text="Cancelar" onAction="#cancelClienteData"/>
+        </VBox>
    </VBox>
 </left>
 

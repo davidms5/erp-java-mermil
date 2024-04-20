@@ -5,16 +5,46 @@ import java.time.LocalDate;
 import org.springframework.stereotype.Controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.DateCell;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.*;
 
 @Controller
 public class VentasController {
 
     @FXML
     private DatePicker datePicker;
+    @FXML
+    private TextField idField;
+
+    @FXML
+    private TextField senorField;
+
+    @FXML
+    private TextField direccionField;
+
+    @FXML
+    private TextField cuitField;
+
+    @FXML
+    private ChoiceBox<String> ivaTipoChoiceBox;
+
+    @FXML
+    private void cancelClienteData() {
+        // Clear the data of the client
+        idField.clear();
+        senorField.clear();
+        direccionField.clear();
+        cuitField.clear();
+        ivaTipoChoiceBox.getSelectionModel().clearSelection();
+    }
 
     public void initialize() {
+
+        idField.addEventFilter(javafx.scene.input.KeyEvent.KEY_TYPED, event -> {
+            // Allow only numeric characters
+            if (!event.getCharacter().matches("[0-9]")) {
+                event.consume();
+            }
+        });
         // Set the initial value of the DatePicker to today
         datePicker.setValue(LocalDate.now());
 
