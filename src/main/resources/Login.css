@@ -1,0 +1,27 @@
+.root {
+    -fx-background-color: #F0F0F0; /* Light gray background */
+}
+
+Label {
+    -fx-text-fill: #333333; /* Dark gray text color */
+    -fx-font-size: 18; /* Larger font size */
+}
+
+TextField, PasswordField {
+    -fx-background-color: #FFFFFF; /* White input fields */
+    -fx-font-size: 16; /* Medium font size */
+    -fx-pref-width: 200px; /* Adjust width as needed */
+}
+
+Button {
+    -fx-background-color: #0078D7; /* Blue button */
+    -fx-text-fill: white;
+    -fx-font-size: 16; /* Medium font size */
+    -fx-pref-width: 100px; /* Adjust width as needed */
+}
+
+VBox {
+    -fx-alignment: center;
+    -fx-spacing: 10; /* Adjust spacing as needed */
+    -fx-padding: 20; /* Adjust padding as needed */
+}

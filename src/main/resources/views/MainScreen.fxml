@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" prefWidth="800" prefHeight="600" fx:controller="com.mermil.erp.controllers.MainScreenController">
+    <!-- Left side: VBox of options -->
+    <top>
+        <HBox alignment="CENTER_RIGHT" style="-fx-background-color: lightgray; -fx-padding: 10;">
+            <Button text="Logout" onAction="#handleLogout" style="-fx-cursor:pointer"/>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox prefWidth="250" style="-fx-background-color: lightblue;">
+            <Label text="ventas"/>
+            <Button text="recibo"  onAction="#handleReciboPopupScreen" style="-fx-cursor:pointer"/>
+        </VBox>
+    </left>
+
+    <!-- Right side: Gray blank space -->
+    <right>
+        <Pane prefWidth="550" style="-fx-background-color: lightgray;">
+            <!-- Content for the right side goes here -->
+        </Pane>
+    </right>
+</BorderPane>
+
