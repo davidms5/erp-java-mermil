@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.*?>
 <?import java.net.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" prefWidth="1200" prefHeight="700" stylesheets="@styles/RecibosStyles.css">
+<BorderPane xmlns:fx="http://javafx.com/fxml" prefWidth="1200" prefHeight="700" stylesheets="@styles/RecibosStyles.css" fx:controller="com.mermil.erp.controllers.VentasController">
 
    <top>
       <HBox spacing="10" style="-fx-background-color: lightblue; -fx-padding: 10;">
@@ -17,9 +17,13 @@
    </top>
 
 <left>
-<VBox alignment="CENTER"  style="-fx-background-color: lightgray">
-<Label text="venta"/>
- </VBox>
+   <VBox alignment="CENTER" style="-fx-background-color: lightgray">
+         <Label text="Encabezado"/>
+         <HBox spacing="10">
+            <Label text="Seleccione la fecha:"/>
+            <DatePicker fx:id="datePicker" />
+         </HBox>
+   </VBox>
 </left>
 
 </BorderPane>
