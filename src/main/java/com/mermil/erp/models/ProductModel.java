@@ -1,5 +1,6 @@
 package com.mermil.erp.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,12 +13,20 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserModel {
+public class ProductModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private String username;
-    private String password;
+    private String cod_product;
+    private String descripcion;
+    private int precio;
+
+    @Column(nullable = true)
+    private String proveedor;
+
+    @Column(nullable = true)
+    private Integer precio_compra;
+
 }
