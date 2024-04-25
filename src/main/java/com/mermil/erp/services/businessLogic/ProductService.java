@@ -1,6 +1,7 @@
 package com.mermil.erp.services.businessLogic;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,11 +25,11 @@ public class ProductService {
 
     private ProductDTO convertToDTO(ProductModel product) {
         ProductDTO dto = new ProductDTO();
-        dto.setCodProduct(product.getCod_Product());
-        dto.setDescription(product.getDescription());
-        dto.setPrice(product.getPrice());
-        dto.setSupplier(product.getSupplier());
-        dto.setPurchasePrice(product.getPurchasePrice());
+        dto.setCod_Product(product.getCod_product());
+        dto.setDescripcion(product.getDescripcion());
+        dto.setPrice(product.getPrecio());
+        dto.setProveedor(product.getProveedor());
+        dto.setPrecioCompra(product.getPrecio_compra());
         return dto;
     }
 }

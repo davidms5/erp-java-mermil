@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.4</version>
+		<version>3.2.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.mermil</groupId>
@@ -14,7 +14,7 @@
 	<name>erp</name>
 	<description>erp for mermil s.r.l</description>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>19</java.version>
 		<javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
 	</properties>
 	<dependencies>

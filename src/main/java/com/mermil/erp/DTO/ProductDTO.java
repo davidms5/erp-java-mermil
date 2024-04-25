@@ -1,13 +1,21 @@
 package com.mermil.erp.DTO;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
 public class ProductDTO {
 
-    private String codProduct;
-    private String description;
+    @NotBlank(message = "Product code is required")
+    private String cod_Product;
+
+    @NotBlank(message = "Description is required")
+    private String descripcion;
+
+    @NotNull(message = "Price is required")
     private int price;
-    private String provider;
-    private Integer purchasePrice;
+    
+    private String Proveedor;
+    private Integer precioCompra;
 }
