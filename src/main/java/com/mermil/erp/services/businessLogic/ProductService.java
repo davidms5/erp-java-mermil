@@ -16,8 +16,12 @@ import com.mermil.erp.repository.ProductRepository;
 @Service
 public class ProductService {
 
+    private final ProductRepository productRepository;
+
     @Autowired
-    private ProductRepository productRepository;
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     public List<ProductDTO> getAllProducts() {
 
@@ -30,7 +34,7 @@ public class ProductService {
         ProductDTO dto = new ProductDTO();
         dto.setCod_Product(product.getCod_product());
         dto.setDescripcion(product.getDescripcion());
-        dto.setPrice(product.getPrecio());
+        dto.setPrecio(product.getPrecio());
         dto.setProveedor(product.getProveedor());
         dto.setPrecioCompra(product.getPrecio_compra());
         return dto;
@@ -41,11 +45,23 @@ public class ProductService {
 
         try (Workbook workbook = WorkbookFactory.create(new FileInputStream(file))) {
             Sheet sheet = workbook.getSheetAt(0);
-            for (Row row : sheet) {
+            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+                Row row = sheet.getRow(i);
                 ProductDTO dto = new ProductDTO();
                 dto.setCod_Product(row.getCell(1).getStringCellValue());
                 dto.setDescripcion(row.getCell(2).getStringCellValue());
-                dto.setPrice((int) row.getCell(3).getNumericCellValue());
+
+                switch (row.getCell(3).getCellType()) {
+
+                    case STRING, BLANK:
+                        dto.setPrecio(0);
+                        break;
+                    case NUMERIC:
+                        dto.setPrecio((int) row.getCell(3).getNumericCellValue());
+                        break;
+                    default:
+                        break;
+                }
                 productList.add(dto);
             }
         }
@@ -62,7 +78,7 @@ public class ProductService {
         ProductModel entity = new ProductModel();
         entity.setCod_product(dto.getCod_Product());
         entity.setDescripcion(dto.getDescripcion());
-        entity.setPrecio(dto.getPrice());
+        entity.setPrecio(dto.getPrecio());
         entity.setProveedor(dto.getProveedor());
         entity.setPrecio_compra(dto.getPrecioCompra());
         return entity;

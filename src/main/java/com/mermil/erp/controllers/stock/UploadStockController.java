@@ -2,6 +2,9 @@ package com.mermil.erp.controllers.stock;
 
 import java.io.File;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 //import com.mermil.erp.DTO.ProductDTO;
 import com.mermil.erp.services.businessLogic.ProductService;
 //import java.util.*;
@@ -12,7 +15,15 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+@Controller
 public class UploadStockController {
+
+    private final ProductService productService;
+
+    @Autowired
+    public UploadStockController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @FXML
     private TextField filePathTextField;
@@ -25,12 +36,6 @@ public class UploadStockController {
 
     @FXML
     private Label statusLabel;
-
-    private ProductService productService;
-
-    public UploadStockController() {
-        productService = new ProductService(); // Initialize your ProductService
-    }
 
     @FXML
     private void handleUploadButtonClick() {

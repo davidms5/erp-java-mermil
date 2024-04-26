@@ -3,6 +3,7 @@ package com.mermil.erp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
 import com.mermil.erp.services.StageNavigationServices;
 
@@ -14,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 @SpringBootApplication
+@ComponentScan("com.mermil.erp")
 public class ErpApplication extends Application {
 
 	private ConfigurableApplicationContext applicationContext;
