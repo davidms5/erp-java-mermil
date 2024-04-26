@@ -3,6 +3,7 @@ package com.mermil.erp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.mermil.erp.services.StageNavigationServices;
 
@@ -14,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 @SpringBootApplication
+@EnableJpaRepositories(basePackages = "com.mermil.erp.repository")
 public class ErpApplication extends Application {
 
 	private ConfigurableApplicationContext applicationContext;

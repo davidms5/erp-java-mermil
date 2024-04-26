@@ -36,16 +36,30 @@ public class ProductService {
         return dto;
     }
 
-    public List<ProductDTO> bulkPostProducts(File file) throws IOException {
+    public void bulkPostProducts(File file) throws IOException {
         List<ProductDTO> productList = new ArrayList<>();
 
         try (Workbook workbook = WorkbookFactory.create(new FileInputStream(file))) {
             Sheet sheet = workbook.getSheetAt(0);
-            for (Row row : sheet) {
+            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 ProductDTO dto = new ProductDTO();
+                Row row = sheet.getRow(i);
                 dto.setCod_Product(row.getCell(1).getStringCellValue());
                 dto.setDescripcion(row.getCell(2).getStringCellValue());
-                dto.setPrice((int) row.getCell(3).getNumericCellValue());
+
+                switch (row.getCell(3).getCellType()) {
+                    case STRING, BLANK:
+                        dto.setPrice(0);
+                        // Process string value
+                        break;
+                    case NUMERIC:
+                        dto.setPrice((int) row.getCell(3).getNumericCellValue());
+                        // Process numeric value
+                        break;
+                    default:
+                        break;
+                    // Handle other cell types if needed
+                }
                 productList.add(dto);
             }
         }
@@ -55,7 +69,7 @@ public class ProductService {
                 .collect(Collectors.toList());
         productRepository.saveAll(productModels);
 
-        return productList;
+        // return productList;
     }
 
     private ProductModel convertToEntity(ProductDTO dto) {
