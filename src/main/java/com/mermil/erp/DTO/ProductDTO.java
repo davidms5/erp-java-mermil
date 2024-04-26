@@ -14,8 +14,8 @@ public class ProductDTO {
     private String descripcion;
 
     @NotNull(message = "Price is required")
-    private int price;
-    
+    private int precio;
+
     private String Proveedor;
     private Integer precioCompra;
 }

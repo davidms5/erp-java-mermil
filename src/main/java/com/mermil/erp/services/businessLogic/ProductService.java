@@ -16,8 +16,12 @@ import com.mermil.erp.repository.ProductRepository;
 @Service
 public class ProductService {
 
+    private final ProductRepository productRepository;
+
     @Autowired
-    private ProductRepository productRepository;
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     public List<ProductDTO> getAllProducts() {
 
@@ -30,7 +34,7 @@ public class ProductService {
         ProductDTO dto = new ProductDTO();
         dto.setCod_Product(product.getCod_product());
         dto.setDescripcion(product.getDescripcion());
-        dto.setPrice(product.getPrecio());
+        dto.setPrecio(product.getPrecio());
         dto.setProveedor(product.getProveedor());
         dto.setPrecioCompra(product.getPrecio_compra());
         return dto;
@@ -49,11 +53,11 @@ public class ProductService {
 
                 switch (row.getCell(3).getCellType()) {
                     case STRING, BLANK:
-                        dto.setPrice(0);
+                        dto.setPrecio(0);
                         // Process string value
                         break;
                     case NUMERIC:
-                        dto.setPrice((int) row.getCell(3).getNumericCellValue());
+                        dto.setPrecio((int) row.getCell(3).getNumericCellValue());
                         // Process numeric value
                         break;
                     default:
@@ -76,7 +80,7 @@ public class ProductService {
         ProductModel entity = new ProductModel();
         entity.setCod_product(dto.getCod_Product());
         entity.setDescripcion(dto.getDescripcion());
-        entity.setPrecio(dto.getPrice());
+        entity.setPrecio(dto.getPrecio());
         entity.setProveedor(dto.getProveedor());
         entity.setPrecio_compra(dto.getPrecioCompra());
         return entity;
