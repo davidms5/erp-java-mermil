@@ -2,7 +2,7 @@ package com.mermil.erp.controllers.stock;
 
 import java.io.File;
 
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 //import com.mermil.erp.DTO.ProductDTO;
@@ -20,9 +20,8 @@ public class UploadStockController {
 
     private final ProductService productService;
 
-    @Autowired
-    public UploadStockController(ProductService productService) {
-        this.productService = productService;
+    public UploadStockController() {
+        this.productService = null; // or initialize it if necessary
     }
 
     @FXML

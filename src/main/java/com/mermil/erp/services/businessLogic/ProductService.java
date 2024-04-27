@@ -6,7 +6,7 @@ import java.util.*;
 import java.io.FileInputStream;
 import java.util.stream.Collectors;
 import org.apache.poi.ss.usermodel.*;
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mermil.erp.DTO.ProductDTO;
@@ -18,7 +18,6 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    @Autowired
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
