@@ -1,5 +1,6 @@
 package com.mermil.erp;
 
+//import com.mermil.erp.factory.ProductServiceFactory;
 import com.mermil.erp.services.StageNavigationServices;
 
 import jakarta.persistence.EntityManagerFactory;
@@ -30,7 +31,7 @@ public class ErpApplication extends Application {
 		primaryStage.setScene(new Scene(rootNode));
 		primaryStage.setTitle("login");
 		primaryStage.getIcons().add(new Image("/logo.jpeg"));
-
+		primaryStage.setResizable(false);
 		primaryStage.show();
 		// Call setMainScreenCloseListener to prevent closing the main screen while
 		// popups are open
@@ -48,7 +49,7 @@ public class ErpApplication extends Application {
 	}
 
 	private void initializeEntityManagerFactory() {
-		entityManagerFactory = Persistence.createEntityManagerFactory("myPersistenceUnit");
+		entityManagerFactory = Persistence.createEntityManagerFactory("MermilERPPersistenceUnit");
 	}
 
 	public static EntityManagerFactory getEntityManagerFactory() {

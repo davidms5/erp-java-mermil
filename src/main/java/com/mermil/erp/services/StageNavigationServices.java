@@ -61,7 +61,7 @@ public class StageNavigationServices {
                     isPopupOpenCounter--; // Update flag when popup screen is closed
                     popupScreens.remove(fxmlPath);
                 });
-
+                popupStage.setResizable(false);
                 popupStage.show();
                 popupScreens.put(fxmlPath, popupStage);
                 isPopupOpenCounter++;

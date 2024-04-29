@@ -11,22 +11,36 @@ import org.springframework.stereotype.Service;
 
 import com.mermil.erp.DTO.ProductDTO;
 import com.mermil.erp.models.ProductModel;
-import com.mermil.erp.repository.ProductRepository;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 
 @Service
 public class ProductService {
 
-    private final ProductRepository productRepository;
+    private final EntityManagerFactory entityManagerFactory;
 
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ProductService(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
     }
 
     public List<ProductDTO> getAllProducts() {
 
-        List<ProductModel> products = productRepository.findAll();
-
-        return products.stream().map(this::convertToDTO).collect(Collectors.toList());
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<ProductModel> criteriaQuery = criteriaBuilder.createQuery(ProductModel.class);
+            Root<ProductModel> root = criteriaQuery.from(ProductModel.class);
+            criteriaQuery.select(root);
+            List<ProductModel> products = entityManager.createQuery(criteriaQuery).getResultList();
+            return products.stream().map(this::convertToDTO).collect(Collectors.toList());
+        } finally {
+            entityManager.close();
+        }
     }
 
     private ProductDTO convertToDTO(ProductModel product) {
@@ -39,7 +53,7 @@ public class ProductService {
         return dto;
     }
 
-    public void bulkPostProducts(File file) throws IOException {
+    public String bulkPostProducts(File file) throws IOException {
         List<ProductDTO> productList = new ArrayList<>();
 
         try (Workbook workbook = WorkbookFactory.create(new FileInputStream(file))) {
@@ -67,12 +81,22 @@ public class ProductService {
             }
         }
 
-        List<ProductModel> productModels = productList.stream()
-                .map(this::convertToEntity)
-                .collect(Collectors.toList());
-        productRepository.saveAll(productModels);
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            for (ProductDTO dto : productList) {
+                ProductModel entity = convertToEntity(dto);
+                entityManager.persist(entity);
+            }
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            throw e;
+        } finally {
+            entityManager.close();
+        }
 
-        // return productList;
+        return "ok";
     }
 
     private ProductModel convertToEntity(ProductDTO dto) {

@@ -5,23 +5,39 @@ import java.io.File;
 //import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.mermil.erp.ErpApplication;
+import com.mermil.erp.DTO.ProductDTO;
+//import com.mermil.erp.factory.ProductServiceFactory;
 //import com.mermil.erp.DTO.ProductDTO;
 import com.mermil.erp.services.businessLogic.ProductService;
-//import java.util.*;
+
+import jakarta.persistence.EntityManagerFactory;
+//import jakarta.persistence.Persistence;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.scene.control.ListView;
 
 @Controller
 public class UploadStockController {
 
     private final ProductService productService;
 
+    private final EntityManagerFactory entityManagerFactory;
+
     public UploadStockController() {
-        this.productService = null; // or initialize it if necessary
+        this.entityManagerFactory = ErpApplication.getEntityManagerFactory();
+        // ProductServiceFactory productServiceFactory = new
+        // ProductServiceFactory(entityManagerFactory);
+        this.productService = new ProductService(entityManagerFactory);
     }
 
     @FXML
@@ -35,6 +51,9 @@ public class UploadStockController {
 
     @FXML
     private Label statusLabel;
+
+    @FXML
+    private ListView<String> productListView;
 
     @FXML
     private void handleUploadButtonClick() {
@@ -58,5 +77,17 @@ public class UploadStockController {
         } else {
             statusLabel.setText("No file selected.");
         }
+    }
+
+    @FXML
+    private void initialize() {
+        displayAllProducts();
+    }
+
+    private void displayAllProducts() {
+        List<ProductDTO> productList = productService.getAllProducts();
+        List<String> productStrings = productList.stream().map(ProductDTO::toString).collect(Collectors.toList());
+        ObservableList<String> products = FXCollections.observableArrayList(productStrings);
+        productListView.setItems(products);
     }
 }

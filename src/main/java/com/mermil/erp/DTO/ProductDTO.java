@@ -18,4 +18,13 @@ public class ProductDTO {
 
     private String Proveedor;
     private Integer precioCompra;
+
+    @Override
+    public String toString() {
+        return "cod_Product='" + cod_Product + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", precio=" + precio +
+                ", Proveedor='" + Proveedor + '\'' +
+                ", precioCompra=" + precioCompra;
+    }
 }
