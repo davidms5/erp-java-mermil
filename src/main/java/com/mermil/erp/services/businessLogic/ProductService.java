@@ -14,7 +14,7 @@ import com.mermil.erp.models.ProductModel;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -82,21 +82,57 @@ public class ProductService {
         }
 
         EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
         try {
-            entityManager.getTransaction().begin();
+            List<ProductModel> existingEntities = getExistingEntities(entityManager, productList);
             for (ProductDTO dto : productList) {
-                ProductModel entity = convertToEntity(dto);
-                entityManager.persist(entity);
+                ProductModel entity = findEntityByCodProduct(existingEntities, dto.getCod_Product());
+                if (entity != null) {
+                    // Update existing entity
+                    updateEntity(entity, dto);
+                } else {
+                    // Insert new entity
+                    entity = convertToEntity(dto);
+                    entityManager.persist(entity);
+                }
             }
-            entityManager.getTransaction().commit();
+            transaction.commit();
         } catch (Exception e) {
-            entityManager.getTransaction().rollback();
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
             throw e;
         } finally {
             entityManager.close();
         }
 
         return "ok";
+    }
+
+    private List<ProductModel> getExistingEntities(EntityManager entityManager, List<ProductDTO> productList) {
+        Set<String> codProducts = productList.stream().map(ProductDTO::getCod_Product).collect(Collectors.toSet());
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<ProductModel> criteriaQuery = criteriaBuilder.createQuery(ProductModel.class);
+        Root<ProductModel> root = criteriaQuery.from(ProductModel.class);
+        criteriaQuery.select(root)
+                .where(root.get("cod_product").in(codProducts));
+        return entityManager.createQuery(criteriaQuery).getResultList();
+    }
+
+    private ProductModel findEntityByCodProduct(List<ProductModel> entities, String codProduct) {
+        return entities.stream()
+                .filter(entity -> entity.getCod_product().equals(codProduct))
+                .findFirst()
+                .orElse(null);
+    }
+
+    private void updateEntity(ProductModel entity, ProductDTO dto) {
+        // Update entity fields
+        entity.setDescripcion(dto.getDescripcion());
+        entity.setPrecio(dto.getPrecio());
+        entity.setProveedor(dto.getProveedor());
+        entity.setPrecio_compra(dto.getPrecioCompra());
     }
 
     private ProductModel convertToEntity(ProductDTO dto) {
