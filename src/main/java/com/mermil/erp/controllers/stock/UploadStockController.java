@@ -3,7 +3,6 @@ package com.mermil.erp.controllers.stock;
 import java.io.File;
 
 //import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 
 import com.mermil.erp.ErpApplication;
 import com.mermil.erp.DTO.ProductDTO;
@@ -26,7 +25,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.control.ListView;
 
-@Controller
 public class UploadStockController {
 
     private final ProductService productService;
@@ -54,6 +52,21 @@ public class UploadStockController {
 
     @FXML
     private ListView<String> productListView;
+
+    @FXML
+    private void handleAddButtonClick() {
+        // Implement logic to add a product
+    }
+
+    @FXML
+    private void handleUpdateButtonClick() {
+        // Implement logic to update a product
+    }
+
+    @FXML
+    private void handleDeleteButtonClick() {
+        // Implement logic to delete a product
+    }
 
     @FXML
     private void handleUploadButtonClick() {
