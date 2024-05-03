@@ -1,5 +1,7 @@
 package com.mermil.erp.DTO;
 
+import java.math.BigDecimal;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -14,16 +16,20 @@ public class ProductDTO {
     private String descripcion;
 
     @NotNull(message = "Price is required")
-    private int precio;
+    private BigDecimal precio;
+
+    @NotNull(message = "precio venta es requerido")
+    private BigDecimal precio_venta;
 
     private String Proveedor;
-    private Integer precioCompra;
+    private BigDecimal precioCompra;
 
     @Override
     public String toString() {
         return "cod_Product='" + cod_Product + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 ", precio=" + precio +
+                ", precio_venta=" + precio_venta +
                 ", Proveedor='" + Proveedor + '\'' +
                 ", precioCompra=" + precioCompra;
     }

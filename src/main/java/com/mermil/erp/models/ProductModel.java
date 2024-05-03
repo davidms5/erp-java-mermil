@@ -1,5 +1,7 @@
 package com.mermil.erp.models;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,12 +23,14 @@ public class ProductModel {
 
     private String cod_product;
     private String descripcion;
-    private int precio;
+    private BigDecimal precio;
 
     @Column(nullable = true)
     private String proveedor;
 
     @Column(nullable = true)
-    private Integer precio_compra;
+    private BigDecimal precio_compra;
+
+    private BigDecimal precio_venta;
 
 }

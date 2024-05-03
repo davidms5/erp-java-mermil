@@ -2,6 +2,7 @@ package com.mermil.erp.services.businessLogic;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.*;
 import java.io.FileInputStream;
 import java.util.stream.Collectors;
@@ -66,11 +67,25 @@ public class ProductService {
 
                 switch (row.getCell(3).getCellType()) {
                     case STRING, BLANK:
-                        dto.setPrecio(0);
+                        dto.setPrecio(new BigDecimal(0));
                         // Process string value
                         break;
                     case NUMERIC:
-                        dto.setPrecio((int) row.getCell(3).getNumericCellValue());
+                        dto.setPrecio(new BigDecimal(Double.toString(row.getCell(3).getNumericCellValue())));
+                        // Process numeric value
+                        break;
+                    default:
+                        break;
+                    // Handle other cell types if needed
+                }
+                // System.out.println(row.getCell(4).getCellType());
+                switch (row.getCell(4).getCellType()) {
+                    case STRING, BLANK:
+                        dto.setPrecio(new BigDecimal(0));
+                        // Process string value
+                        break;
+                    case NUMERIC:
+                        dto.setPrecio(new BigDecimal(Double.toString(row.getCell(4).getNumericCellValue())));
                         // Process numeric value
                         break;
                     default:
@@ -133,6 +148,7 @@ public class ProductService {
         entity.setPrecio(dto.getPrecio());
         entity.setProveedor(dto.getProveedor());
         entity.setPrecio_compra(dto.getPrecioCompra());
+        entity.setPrecio_venta(dto.getPrecio_venta());
     }
 
     private ProductModel convertToEntity(ProductDTO dto) {
@@ -142,6 +158,7 @@ public class ProductService {
         entity.setPrecio(dto.getPrecio());
         entity.setProveedor(dto.getProveedor());
         entity.setPrecio_compra(dto.getPrecioCompra());
+        entity.setPrecio_venta(dto.getPrecio_venta());
         return entity;
     }
 }

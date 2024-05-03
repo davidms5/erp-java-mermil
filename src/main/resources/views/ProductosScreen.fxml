@@ -9,26 +9,25 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.mermil.erp.controllers.stock.UploadStockController"
-            prefHeight="500.0" prefWidth="800.0" minWidth="800" maxWidth="800" minHeight="500" maxHeight="500">
-    
+            prefHeight="550.0" prefWidth="800.0" minWidth="800" maxWidth="800" minHeight="550" maxHeight="550">
+
     <children>
-    <Label layoutX="20.0" layoutY="20.0" text="Product Management" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+        <Label layoutX="20.0" layoutY="20.0" text="Product Management" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
 
-         <Label layoutX="20.0" layoutY="380.0" text="Add/Edit Product" style="-fx-font-size: 16px;"/>
-         
-        <TextField fx:id="codProductTextField" layoutX="10.0" layoutY="360.0" promptText="Product Code"/>
-        <TextField fx:id="descriptionTextField" layoutX="150.0" layoutY="360.0" promptText="Description"/>
-        <TextField fx:id="priceTextField" layoutX="300.0" layoutY="360.0" promptText="Price"/>
-        <TextField fx:id="providerTextField" layoutX="450.0" layoutY="360.0" promptText="Provider"/>
-        
-        <Button fx:id="addButton" layoutX="10.0" layoutY="260.0" text="Add" onAction="#handleAddButtonClick"/>
-        <Button fx:id="updateButton" layoutX="100.0" layoutY="260.0" text="Update" onAction="#handleUpdateButtonClick"/>
-        <Button fx:id="deleteButton" layoutX="200.0" layoutY="260.0" text="Delete" onAction="#handleDeleteButtonClick"/>
-
-        <Button fx:id="uploadButton" layoutX="250.0" layoutY="350.0" text="Upload File" onAction="#handleUploadButtonClick"/>
-        <Label fx:id="statusLabel" layoutX="250.0" layoutY="370.0" />
         <ListView fx:id="productListView" layoutX="20.0" layoutY="60.0" prefHeight="300.0" prefWidth="760.0"/>
+
+        <Label layoutX="20.0" layoutY="380.0" text="Add/Edit Product" style="-fx-font-size: 16px;"/>
+
+        <TextField fx:id="codProductTextField" layoutX="20.0" layoutY="410.0" prefWidth="200.0" promptText="Cod Product"/>
+        <TextField fx:id="descriptionTextField" layoutX="240.0" layoutY="410.0" prefWidth="400.0" promptText="Description"/>
+        <TextField fx:id="priceTextField" layoutX="660.0" layoutY="410.0" prefWidth="120.0" promptText="Price"/>
+
+        <Button fx:id="addButton" layoutX="20.0" layoutY="450.0" prefWidth="100.0" text="Add" onAction="#handleAddButtonClick"/>
+        <Button fx:id="updateButton" layoutX="130.0" layoutY="450.0" prefWidth="100.0" text="Update" onAction="#handleUpdateButtonClick"/>
+        <Button fx:id="deleteButton" layoutX="240.0" layoutY="450.0" prefWidth="100.0" text="Delete" onAction="#handleDeleteButtonClick"/>
+
+        <Button fx:id="uploadButton" layoutX="660.0" layoutY="450.0" prefWidth="100.0" text="Upload File" onAction="#handleUploadButtonClick"/>
+        <Label fx:id="statusLabel" layoutX="20.0" layoutY="490.0" prefWidth="740.0"/>
     </children>
 
-    
 </AnchorPane>
