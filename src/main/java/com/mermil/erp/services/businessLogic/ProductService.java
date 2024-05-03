@@ -49,6 +49,7 @@ public class ProductService {
         dto.setCod_Product(product.getCod_product());
         dto.setDescripcion(product.getDescripcion());
         dto.setPrecio(product.getPrecio());
+        dto.setPrecio_venta(product.getPrecio_venta());
         dto.setProveedor(product.getProveedor());
         dto.setPrecioCompra(product.getPrecio_compra());
         return dto;
@@ -81,11 +82,11 @@ public class ProductService {
                 // System.out.println(row.getCell(4).getCellType());
                 switch (row.getCell(4).getCellType()) {
                     case STRING, BLANK:
-                        dto.setPrecio(new BigDecimal(0));
+                        dto.setPrecio_venta(new BigDecimal(0));
                         // Process string value
                         break;
                     case NUMERIC:
-                        dto.setPrecio(new BigDecimal(Double.toString(row.getCell(4).getNumericCellValue())));
+                        dto.setPrecio_venta(new BigDecimal(Double.toString(row.getCell(4).getNumericCellValue())));
                         // Process numeric value
                         break;
                     default:
@@ -126,6 +127,7 @@ public class ProductService {
     }
 
     private List<ProductModel> getExistingEntities(EntityManager entityManager, List<ProductDTO> productList) {
+
         Set<String> codProducts = productList.stream().map(ProductDTO::getCod_Product).collect(Collectors.toSet());
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<ProductModel> criteriaQuery = criteriaBuilder.createQuery(ProductModel.class);

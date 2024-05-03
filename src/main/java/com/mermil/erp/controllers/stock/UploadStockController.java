@@ -39,7 +39,16 @@ public class UploadStockController {
     }
 
     @FXML
-    private TextField filePathTextField;
+    private TextField codProductTextField;
+
+    @FXML
+    private TextField descriptionTextField;
+
+    @FXML
+    private TextField priceTextField;
+
+    @FXML
+    private TextField sellPriceField;
 
     @FXML
     private Button chooseFileButton;
