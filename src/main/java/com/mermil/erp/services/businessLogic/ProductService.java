@@ -44,6 +44,42 @@ public class ProductService {
         }
     }
 
+    public ProductDTO getProductBy_cod_product(String codProduct) {
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<ProductDTO> criteriaQuery = criteriaBuilder.createQuery(ProductDTO.class);
+            Root<ProductModel> root = criteriaQuery.from(ProductModel.class);
+            criteriaQuery.select(criteriaBuilder.construct(ProductDTO.class,
+                    root.get("cod_product"),
+                    root.get("descripcion"),
+                    root.get("precio"),
+                    root.get("precio_venta")
+            // Add other fields you need here...
+            )).where(criteriaBuilder.equal(root.get("cod_product"), codProduct));
+            return entityManager.createQuery(criteriaQuery).getSingleResult();
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    public ProductDTO createProduct(ProductDTO dto) {
+        // Convert DTO to entity
+        ProductModel entity = convertToEntity(dto);
+
+        // Save entity in the database
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.persist(entity);
+        transaction.commit();
+        entityManager.close();
+
+        // Convert entity back to DTO and return
+        return convertToDTO(entity);
+    }
+
     private ProductDTO convertToDTO(ProductModel product) {
         ProductDTO dto = new ProductDTO();
         dto.setCod_Product(product.getCod_product());
