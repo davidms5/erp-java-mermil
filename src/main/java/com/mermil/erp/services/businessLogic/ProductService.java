@@ -64,9 +64,9 @@ public class ProductService {
         }
     }
 
-    public ProductDTO createProduct(ProductDTO dto) {
+    public ProductDTO createProduct(Map<String, Object> fieldMap) {
         // Convert DTO to entity
-        ProductModel entity = convertToEntity(dto);
+        ProductModel entity = convertToEntity(fieldMap);
 
         // Save entity in the database
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -197,6 +197,17 @@ public class ProductService {
         entity.setProveedor(dto.getProveedor());
         entity.setPrecio_compra(dto.getPrecioCompra());
         entity.setPrecio_venta(dto.getPrecio_venta());
+        return entity;
+    }
+
+    private ProductModel convertToEntity(Map<String, Object> fieldMap) {
+        ProductModel entity = new ProductModel();
+        entity.setCod_product((String) fieldMap.get("codProduct"));
+        entity.setDescripcion((String) fieldMap.get("descripcion"));
+        entity.setPrecio((BigDecimal) fieldMap.get("precio"));
+        entity.setPrecio_venta((BigDecimal) fieldMap.get("precioVenta"));
+        entity.setProveedor((String) fieldMap.get("proveedor"));
+        entity.setPrecio_compra((BigDecimal) fieldMap.get("precioCompra"));
         return entity;
     }
 }
