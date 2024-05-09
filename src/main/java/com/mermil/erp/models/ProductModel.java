@@ -21,7 +21,9 @@ public class ProductModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column(unique = true)
     private String cod_product;
+
     private String descripcion;
     private BigDecimal precio;
     private BigDecimal precio_venta;

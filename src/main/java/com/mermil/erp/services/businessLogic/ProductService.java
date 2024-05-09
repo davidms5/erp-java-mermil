@@ -64,7 +64,7 @@ public class ProductService {
         }
     }
 
-    public ProductDTO createProduct(Map<String, Object> fieldMap) {
+    public void createProduct(Map<String, Object> fieldMap) {
         // Convert DTO to entity
         ProductModel entity = convertToEntity(fieldMap);
 
@@ -77,7 +77,7 @@ public class ProductService {
         entityManager.close();
 
         // Convert entity back to DTO and return
-        return convertToDTO(entity);
+        //return convertToDTO(entity);
     }
 
     private ProductDTO convertToDTO(ProductModel product) {
