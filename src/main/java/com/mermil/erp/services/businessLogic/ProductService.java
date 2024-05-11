@@ -77,7 +77,66 @@ public class ProductService {
         entityManager.close();
 
         // Convert entity back to DTO and return
-        //return convertToDTO(entity);
+        // return convertToDTO(entity);
+    }
+
+    public String updateProduct(Map<String, Object> productData) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+
+            entityManager.getTransaction().begin();
+
+            String codProduct = (String) productData.get("codProduct");
+            ProductModel existingProduct = entityManager.find(ProductModel.class, codProduct);
+            if (existingProduct == null) {
+                entityManager.getTransaction().rollback();
+                return "Product not found";
+            }
+
+            // Update product attributes
+            if (productData.containsKey("descripcion")) {
+                existingProduct.setDescripcion((String) productData.get("descripcion"));
+            }
+            if (productData.containsKey("precio")) {
+                existingProduct.setPrecio((BigDecimal) productData.get("precio"));
+            }
+            if (productData.containsKey("proveedor")) {
+                existingProduct.setProveedor((String) productData.get("proveedor"));
+            }
+            if (productData.containsKey("precioCompra")) {
+                existingProduct.setPrecio_compra((BigDecimal) productData.get("precioCompra"));
+            }
+
+            entityManager.getTransaction().commit();
+            return "Product updated successfully";
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            throw e;
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    public String deleteProduct(String codProduct) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+
+            ProductModel existingProduct = entityManager.find(ProductModel.class, codProduct);
+            if (existingProduct == null) {
+                entityManager.getTransaction().rollback();
+                return "Product not found";
+            }
+
+            entityManager.remove(existingProduct);
+            entityManager.getTransaction().commit();
+            return "Product deleted successfully";
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            throw e;
+        } finally {
+            entityManager.close();
+        }
     }
 
     private ProductDTO convertToDTO(ProductModel product) {
