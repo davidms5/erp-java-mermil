@@ -1,6 +1,7 @@
 package com.mermil.erp.controllers.stock;
 
 import java.io.File;
+import java.math.BigDecimal;
 
 //import org.springframework.beans.factory.annotation.Autowired;
 
@@ -75,6 +76,33 @@ public class UploadStockController {
     @FXML
     private void handleDeleteButtonClick() {
         // Implement logic to delete a product
+    }
+
+    @FXML
+    private void handleFindProductById() {
+
+        statusLabel.setText("");
+
+        String codigo_producto = codProductTextField.getText();
+
+        if (codigo_producto.length() == 0) {
+
+            statusLabel.setText("un codigo necesita ser pasado");
+            return;
+        }
+        ;
+
+        Map<String, Object> product = productService.getProductBy_cod_product(codigo_producto);
+        if (product == null) {
+            statusLabel.setText(String.format("el producto con el codigo: %s no existe", codigo_producto));
+            return;
+        }
+
+        descriptionTextField.setText((String) product.get("descripcion"));
+
+        BigDecimal price = (BigDecimal) product.get("precio");
+        priceTextField.setText(price.toString());
+
     }
 
     @FXML

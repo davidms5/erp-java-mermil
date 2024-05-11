@@ -44,21 +44,27 @@ public class ProductService {
         }
     }
 
-    public ProductDTO getProductBy_cod_product(String codProduct) {
+    public Map<String, Object> getProductBy_cod_product(String codProduct) {
 
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
+
             CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-            CriteriaQuery<ProductDTO> criteriaQuery = criteriaBuilder.createQuery(ProductDTO.class);
+            CriteriaQuery<ProductModel> criteriaQuery = criteriaBuilder.createQuery(ProductModel.class);
             Root<ProductModel> root = criteriaQuery.from(ProductModel.class);
-            criteriaQuery.select(criteriaBuilder.construct(ProductDTO.class,
-                    root.get("cod_product"),
-                    root.get("descripcion"),
-                    root.get("precio"),
-                    root.get("precio_venta")
-            // Add other fields you need here...
-            )).where(criteriaBuilder.equal(root.get("cod_product"), codProduct));
-            return entityManager.createQuery(criteriaQuery).getSingleResult();
+            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("cod_product"), codProduct));
+            ProductModel product = entityManager.createQuery(criteriaQuery).getSingleResult();
+
+            Map<String, Object> productData = new HashMap<>();
+            productData.put("cod_product", product.getCod_product());
+            productData.put("descripcion", product.getDescripcion());
+            productData.put("precio", product.getPrecio());
+            productData.put("precio_venta", product.getPrecio_venta());
+
+            return productData;
+
+        } catch (Exception e) {
+            return null;
         } finally {
             entityManager.close();
         }
