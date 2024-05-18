@@ -66,6 +66,46 @@ public class UploadStockController {
     @FXML
     private void handleAddButtonClick() {
         // Implement logic to add a product
+        statusLabel.setText("");
+
+        String codigoProducto = codProductTextField.getText();
+        String descripcion = descriptionTextField.getText();
+        String precio = priceTextField.getText();
+        // String precioVenta = sellPriceField.getText();
+
+        // Check if any text field is empty
+        if (codigoProducto.isEmpty() || descripcion.isEmpty() || precio.isEmpty() /* || precioVenta.isEmpty() */) {
+            statusLabel.setText("Todos los campos deben ser llenados.");
+            return;
+        }
+
+        try {
+            BigDecimal price = new BigDecimal(precio);
+            // BigDecimal sellPrice = new BigDecimal(precioVenta);
+
+            // Create a map and add the product details
+            Map<String, Object> productMap = new HashMap<>();
+            productMap.put("codProduct", codigoProducto);
+            productMap.put("descripcion", descripcion);
+            productMap.put("precio", price);
+            // productMap.put("precioVenta", sellPrice);
+
+            // You can now use productMap as needed, for example:
+            // Add to product list, upload, etc.
+
+            productService.createProduct(productMap);
+            // Clear the text fields after adding the product
+            codProductTextField.clear();
+            descriptionTextField.clear();
+            priceTextField.clear();
+            // sellPriceField.clear();
+
+            statusLabel.setText("Producto agregado exitosamente.");
+
+        } catch (NumberFormatException e) {
+            statusLabel.setText("Los campos de precio deben contener números válidos.");
+        }
+
     }
 
     @FXML

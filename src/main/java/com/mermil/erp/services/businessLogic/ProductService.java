@@ -271,8 +271,15 @@ public class ProductService {
         entity.setDescripcion((String) fieldMap.get("descripcion"));
         entity.setPrecio((BigDecimal) fieldMap.get("precio"));
         entity.setPrecio_venta((BigDecimal) fieldMap.get("precioVenta"));
-        entity.setProveedor((String) fieldMap.get("proveedor"));
-        entity.setPrecio_compra((BigDecimal) fieldMap.get("precioCompra"));
+
+        if (fieldMap.containsKey("proveedor")) {
+            entity.setProveedor((String) fieldMap.get("proveedor"));
+        }
+
+        if (fieldMap.containsKey("precioCompra")) {
+            entity.setPrecio_compra((BigDecimal) fieldMap.get("precioCompra"));
+        }
+
         return entity;
     }
 }
